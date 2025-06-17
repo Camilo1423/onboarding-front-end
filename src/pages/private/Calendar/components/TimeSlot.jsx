@@ -43,29 +43,49 @@ const TimeSlot = forwardRef(
 
     // Find all meetings that include this hour
     const slotMeetings = meetings.filter((meeting) => {
-      const startHour = parseInt(meeting.startTime.split(":")[0]);
-      const endHour = parseInt(meeting.endTime.split(":")[0]);
-      return hour >= startHour && hour < endHour;
+      const [startHour, startMinute] = meeting.startTime.split(":").map(Number);
+      const [endHour, endMinute] = meeting.endTime.split(":").map(Number);
+
+      // Convert to total minutes for easier comparison
+      const startTotalMinutes = startHour * 60 + startMinute;
+      const endTotalMinutes = endHour * 60 + endMinute;
+      const currentTotalMinutes = hour * 60;
+
+      return (
+        currentTotalMinutes >= startTotalMinutes &&
+        currentTotalMinutes < endTotalMinutes
+      );
     });
 
     // Calculate if this is the start of a meeting
     const isMeetingStart = (meeting) => {
-      return parseInt(meeting.startTime.split(":")[0]) === hour;
+      const [startHour, startMinute] = meeting.startTime.split(":").map(Number);
+      return startHour === hour && startMinute === 0;
     };
 
     // Calculate meeting duration in hours
     const getMeetingDuration = (meeting) => {
-      const start = parseInt(meeting.startTime.split(":")[0]);
-      const end = parseInt(meeting.endTime.split(":")[0]);
-      return end - start;
+      const [startHour, startMinute] = meeting.startTime.split(":").map(Number);
+      const [endHour, endMinute] = meeting.endTime.split(":").map(Number);
+
+      const startTotalMinutes = startHour * 60 + startMinute;
+      const endTotalMinutes = endHour * 60 + endMinute;
+      const durationMinutes = endTotalMinutes - startTotalMinutes;
+
+      if (durationMinutes < 60) {
+        return `${durationMinutes}min`;
+      }
+
+      const hours = durationMinutes / 60;
+      return `${hours.toFixed(1)}h`;
     };
 
     const handleCreateMeeting = (newMeeting) => {
       onTimeSlotClick(newMeeting);
     };
 
-    const handleUpdateMeeting = (updatedMeeting) => {
-      onTimeSlotClick(updatedMeeting, true);
+    const handleUpdateMeeting = (updatedMeeting, isOnlyRefresh = false) => {
+      onTimeSlotClick(updatedMeeting, true, isOnlyRefresh);
     };
 
     const handleOpenEditModal = (meeting) => {
@@ -102,7 +122,7 @@ const TimeSlot = forwardRef(
                       <div className="text-sm font-medium">{meeting.title}</div>
                       <div className="text-xs">
                         {meeting.normalStartTime} - {meeting.normalEndTime} (
-                        {getMeetingDuration(meeting)}h)
+                        {getMeetingDuration(meeting)})
                       </div>
                       <div className="text-xs mt-1">
                         {meeting.meetingType === "technical"

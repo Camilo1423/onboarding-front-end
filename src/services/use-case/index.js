@@ -11,3 +11,4 @@ export * from "./onboarding/create-onboarding.service.js";
 export * from "./onboarding/get-onboarding-by-day.service.js";
 export * from "./onboarding/get-detailed-onboarding.service.js";
 export * from "./onboarding/update-onboarding.service.js";
+export * from "./onboarding/delete-onboarding.service.js";

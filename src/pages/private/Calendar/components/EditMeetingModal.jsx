@@ -14,8 +14,12 @@ import PropTypes from "prop-types";
 import { useState, useEffect } from "react";
 import CollaboratorAutocomplete from "./CollaboratorAutocomplete";
 import { parseDate } from "@internationalized/date";
-import { ServiceGetDetailedOnboarding } from "@Services";
+import {
+  ServiceGetDetailedOnboarding,
+  ServiceDeleteOnboarding,
+} from "@Services";
 import { Spinner } from "@Components";
+import { useToast } from "@Providers";
 
 const HOURS = Array.from({ length: 23 }, (_, i) => i + 8); // 08 a 18
 const MINUTES = Array.from({ length: 60 }, (_, i) =>
@@ -27,11 +31,11 @@ const padHour = (h) => String(h).padStart(2, "0");
 // Mock function to fetch meeting data by ID
 const fetchMeetingById = async (meetingId) => {
   const response = await ServiceGetDetailedOnboarding({ id: meetingId });
-  console.log(response);
   return response.data;
 };
 
 const EditMeetingModal = ({ isOpen, onClose, onUpdateMeeting, meetingId }) => {
+  const { addToast } = useToast();
   const [meetingData, setMeetingData] = useState({
     name_onboarding: "",
     description_onboarding: "",
@@ -222,6 +226,33 @@ const EditMeetingModal = ({ isOpen, onClose, onUpdateMeeting, meetingId }) => {
     setMeetingData((prev) => ({ ...prev, date: date.toString() }));
     if (errors.date) {
       setErrors((prev) => ({ ...prev, date: "" }));
+    }
+  };
+
+  const handleDelete = async () => {
+    try {
+      const response = await ServiceDeleteOnboarding({
+        id: meetingId,
+        type: meetingData.type,
+      });
+
+      addToast({
+        type: "success",
+        title: "Reunión eliminada exitosamente",
+        content: response.message,
+        duration: 3000,
+        persistent: false,
+      });
+      onUpdateMeeting(null, true);
+      handleClose();
+    } catch (error) {
+      addToast({
+        type: "destructive",
+        title: `Error al eliminar la reunión`,
+        content: error.message,
+        duration: 3000,
+        persistent: false,
+      });
     }
   };
 
@@ -481,19 +512,29 @@ const EditMeetingModal = ({ isOpen, onClose, onUpdateMeeting, meetingId }) => {
                   </p>
                 )}
               </div>
-              <div className="flex justify-end gap-3 mt-6">
-                <Button variant="flat" onPress={handleClose} type="button">
-                  Cancelar
-                </Button>
+              <div className="flex justify-between gap-3 mt-6">
                 <Button
-                  className={cn(
-                    ThemeBasic.backgroundPrimary,
-                    ThemeBasic.textWhite
-                  )}
-                  type="submit"
+                  color="danger"
+                  variant="flat"
+                  onPress={handleDelete}
+                  type="button"
                 >
-                  Guardar Cambios
+                  Eliminar Reunión
                 </Button>
+                <div className="flex gap-3">
+                  <Button variant="flat" onPress={handleClose} type="button">
+                    Cancelar
+                  </Button>
+                  <Button
+                    className={cn(
+                      ThemeBasic.backgroundPrimary,
+                      ThemeBasic.textWhite
+                    )}
+                    type="submit"
+                  >
+                    Guardar Cambios
+                  </Button>
+                </div>
               </div>
             </form>
           )}

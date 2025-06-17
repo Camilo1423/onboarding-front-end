@@ -8,6 +8,8 @@ import {
   ServiceGetOnboardingByDay,
   ServiceUpdateOnboarding,
 } from "@Services";
+import { cn } from "@Utils";
+import { ThemeBasic } from "@Theme";
 
 const CalendarPage = () => {
   const [selectedDate, setSelectedDate] = useState(
@@ -32,7 +34,15 @@ const CalendarPage = () => {
     getMeetingsByDay();
   }, [selectedDate, refresh]);
 
-  const handleTimeSlotClick = async (newMeeting, isUpdate = false) => {
+  const handleTimeSlotClick = async (
+    newMeeting,
+    isUpdate = false,
+    isOnlyRefresh = false
+  ) => {
+    if (isOnlyRefresh) {
+      setRefresh((prev) => prev + 1);
+      return;
+    }
     try {
       let response;
       if (isUpdate) {
@@ -58,7 +68,7 @@ const CalendarPage = () => {
       }
       addToast({
         type: "success",
-        title: `Reunión ${newMeeting.name} creada correctamente`,
+        title: `Reunión ${newMeeting.name_onboarding} creada correctamente`,
         content: response.message,
         duration: 5000,
         persistent: false,
@@ -82,7 +92,9 @@ const CalendarPage = () => {
   return (
     <div className="container mx-auto p-4">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold mb-2">Calendario de Reuniones</h1>
+        <h1 className={cn("text-3xl font-bold mb-2", ThemeBasic.title)}>
+          Calendario de Reuniones
+        </h1>
         <p className="text-gray-600 mb-4">
           Selecciona una fecha y hora para programar tus reuniones
         </p>
