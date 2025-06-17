@@ -137,7 +137,7 @@ const EditMeetingModal = ({ isOpen, onClose, onUpdateMeeting, meetingId }) => {
       new_collaborator_ids: selectedCollaborators.map((c) => c.id),
       deleted_collaborator_ids: deletedCollaborators.map((c) => c.id),
     };
-    onUpdateMeeting(updatedMeeting, true);
+    onUpdateMeeting(updatedMeeting);
     handleClose();
   };
 
