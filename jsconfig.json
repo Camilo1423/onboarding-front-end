@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@Components": ["src/components"],
+      "@CptPrivate": ["src/pages/private/components"],
+      "@CptPublic": ["src/pages/public/components"],
+      "@Providers": ["src/providers"],
+      "@Utils": ["src/utils"],
+      "@Styles": ["src/css"],
+      "@Pages": ["src/pages"],
+      "@Hooks": ["src/hooks"],
+      "@Router": ["src/router"],
+      "@Store": ["src/redux/store"],
+      "@Slice": ["src/redux/slices"],
+      "@Http": ["src/services/api/http.js"],
+      "@Services": ["src/services/use-case"],
+      "@Theme": ["src/theme"],
+      "@Constant": ["src/constant"],
+      "@Middleware": ["src/middleware"],
+      "@PackageJson": ["package.json"],
+      "@Assets": ["src/assets"]
+    }
+  },
+  "exclude": ["node_modules", "dist"]
+}

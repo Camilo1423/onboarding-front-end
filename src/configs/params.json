@@ -1,0 +1,15 @@
+{
+    "Apis": {
+        "Local": "http://localhost:3001",
+        "Dev": "http://localhost:3001",
+        "Prod": "https://one-api.taurodev.com"
+    },
+    "Encripted": {
+        "Local": false,
+        "Dev": false,
+        "Prod": true
+    },
+    "Params": {
+        "isSupport": false
+    }
+}
