@@ -1,5 +1,5 @@
 services:
-  front-holcim:
+  front-onboarding:
     build:
       context: ./
       dockerfile: Dockerfile

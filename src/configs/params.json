@@ -2,7 +2,7 @@
     "Apis": {
         "Local": "http://localhost:3001",
         "Dev": "http://localhost:3001",
-        "Prod": "https://one-api.taurodev.com"
+        "Prod": "https://onboarding-api.taurodev.com"
     },
     "Encripted": {
         "Local": false,

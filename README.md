@@ -1,69 +1,121 @@
-# Proyecto AventID
+# Front-End Onboarding
 
-## Introducción
+Este proyecto es una aplicación web desarrollada con React, Vite y NextUI.
 
-AventID es una aplicación diseñada para [descripción breve del propósito y funcionalidades principales].
+## Requisitos Previos
+
+- Node.js (versión 18 o superior)
+- npm (incluido con Node.js)
+- Git
+
+## Instalación
+
+Sigue estos pasos para configurar el proyecto en tu máquina local:
+
+1. **Clonar el repositorio**
+
+   ```bash
+   git clone [URL_DEL_REPOSITORIO]
+   cd front-end-onboarding
+   ```
+
+2. **Instalar dependencias**
+   ```bash
+   npm install
+   ```
+
+## Scripts Disponibles
+
+El proyecto incluye varios scripts para diferentes entornos:
+
+- `npm run dev` - Inicia el servidor de desarrollo
+- `npm run local` - Inicia el servidor en modo local
+- `npm run prod` - Inicia el servidor en modo producción
+- `npm run build` - Construye la aplicación para producción
+- `npm run lint` - Ejecuta el linter para verificar el código
+- `npm run preview` - Previsualiza la versión de producción localmente
 
 ## Estructura del Proyecto
 
-El proyecto está organizado de la siguiente manera:
+```
+front-end-onboarding/
+├── src/               # Código fuente
+├── public/           # Archivos estáticos
+├── dist/             # Archivos de construcción
+├── node_modules/     # Dependencias
+└── ...
+```
 
-- **src/hooks**: Contiene hooks personalizados como `useSession`, `useAvatar`, `useCookie`, etc.
-- **src/router**: Define las rutas públicas y privadas de la aplicación.
-- **src/services**: Incluye servicios para interactuar con la API, como `Http` y `AxiosRequest`.
-- **src/pages**: Contiene las diferentes páginas de la aplicación, organizadas en públicas y privadas.
-- **src/components**: Componentes reutilizables como `LoadingScreen` y `PasswordStrengthMeter`.
+## Tecnologías Principales
 
-## Componentes Clave
+- React 18
+- Vite
+- NextUI
+- TailwindCSS
+- Redux Toolkit
+- React Router DOM
 
-### Hooks
+## Desarrollo
 
-- **useSession**: Maneja la sesión del usuario, incluyendo inicio de sesión, cierre de sesión y actualización de la sesión.
-- **useAvatar**: Gestiona la obtención y visualización del avatar del usuario.
-- **useCookie**: Proporciona métodos para manipular cookies.
-- **usePermission**: Verifica permisos de usuario y construye rutas dinámicas.
+Para iniciar el servidor de desarrollo:
 
-### Validators
+```bash
+npm run dev
+```
 
-- **PermissionGate**: Controla el acceso a componentes basados en permisos de usuario.
-- **DisableGate**: Deshabilita componentes si el usuario no tiene permisos.
+La aplicación estará disponible en `http://localhost:5173`
 
-## Sistema de Rutas
+## Construcción para Producción
 
-### Rutas Públicas y Privadas
+Para construir la aplicación para producción:
 
-- **PublicRouter**: Gestiona las rutas accesibles sin autenticación.
-- **PrivateRouter**: Gestiona las rutas que requieren autenticación.
+```bash
+npm run build
+```
 
-### Rutas Dinámicas
+Los archivos de construcción se generarán en el directorio `dist/`.
 
-Las rutas se construyen dinámicamente basadas en la sesión del usuario y los permisos asignados.
+## Docker
 
-## Servicios y Casos de Uso
+El proyecto incluye configuración de Docker. Para construir y ejecutar con Docker:
 
-- **Http**: Método para realizar peticiones HTTP a la API.
-- **AxiosRequest**: Clase para manejar peticiones HTTP con autenticación y manejo de tokens.
+```bash
+docker-compose up --build
+```
 
-## Configuración y Ejecución
+### Ejecución en Modo Producción con Docker
 
-Para configurar y ejecutar el proyecto localmente:
+Para simular un entorno de producción usando Docker, puedes ejecutar el siguiente comando:
 
-1. Clona el repositorio.
-2. Instala las dependencias con `npm install`.
-3. Ejecuta el proyecto con `npm start`.
+```bash
+docker-compose up --build -d
+```
 
-## Contribución
+Este comando:
 
-Si deseas contribuir al proyecto, por favor sigue los siguientes pasos:
+- `--build`: Construye las imágenes de Docker
+- `-d`: Ejecuta los contenedores en modo detached (en segundo plano)
 
-1. Haz un fork del repositorio.
-2. Crea una nueva rama (`git checkout -b feature/nueva-funcionalidad`).
-3. Realiza tus cambios y haz commit (`git commit -am 'Añadir nueva funcionalidad'`).
-4. Sube tus cambios (`git push origin feature/nueva-funcionalidad`).
-5. Abre un Pull Request.
+Para verificar que los contenedores están corriendo:
 
-## Licencia
+```bash
+docker-compose ps
+```
 
-Este proyecto está licenciado bajo la Licencia MIT.
-# one-service-domicilios-web-app
-# OnBoarding-Front-End
+Para detener los contenedores:
+
+```bash
+docker-compose down
+```
+
+## Linting
+
+Para verificar el código con ESLint:
+
+```bash
+npm run lint
+```
+
+## Soporte
+
+Si encuentras algún problema o tienes preguntas, por favor crea un issue en el repositorio.
